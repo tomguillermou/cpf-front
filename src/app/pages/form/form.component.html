@@ -1,0 +1,119 @@
+<div class="container mt-5 w-50">
+    <div class="d-flex justify-content-center">
+        <img src="/images/logo_cpf.png" heigth="300" width="300" />
+    </div>
+
+    <div class="text-center">
+        <h2>Formulaire de demande d'accompagnement</h2>
+    </div>
+
+    <form class="form mt-4 mb-5" [formGroup]="leadForm" (ngSubmit)="onSubmit()">
+        <!-- //- Informations personelles -->
+        <input
+            type="text"
+            class="form-control my-3"
+            placeholder="Prénom"
+            formControlName="firstname"
+            [class.border-danger]="displayValidationError && leadForm.get('firstname').invalid"
+        />
+
+        <input
+            type="text"
+            class="form-control my-3"
+            placeholder="Nom"
+            formControlName="lastname"
+            [class.border-danger]="displayValidationError && leadForm.get('firstname').invalid"
+        />
+
+        <input
+            type="text"
+            class="form-control my-3"
+            placeholder="Numéro de téléphone"
+            formControlName="phonenumber"
+            [class.border-danger]="displayValidationError && leadForm.get('firstname').invalid"
+        />
+
+        <input
+            type="text"
+            class="form-control my-3"
+            placeholder="Email"
+            formControlName="email"
+            [class.border-danger]="displayValidationError && leadForm.get('firstname').invalid"
+        />
+
+        <!-- //- Activité professionnelle -->
+        <div class="form-group">
+            <!-- label Avez-vous eu une activité professionnelle ces 3 dernières années ?
+                div(class="form-check")
+                    input#radioEmployed(class="form-check-input" type="radio" name="employed" value="true" checked)
+                    label(class="form-check-label" for="radioEmployed") Oui
+
+                div(class="form-check")
+                    input#radioUnemployed(class="form-check-input" type="radio" name="employed" value="false")
+                    label(class="form-check-label" for="radioUnemployed") Non -->
+        </div>
+        <div class="form-group"></div>
+        <!-- label Si oui, dans quel secteur ?
+                div(class="form-check")
+                    input#radioPrivateSector(class="form-check-input" type="radio" name="sector" value="false" checked)
+                    label(class="form-check-label" for="radioPrivateSector") Privé
+
+                div(class="form-check")
+                    input#radioPublicSector(class="form-check-input" type="radio" name="sector" value="true")
+                    label(class="form-check-label" for="radioPublicSector") Public
+                </div> -->
+        <!-- //- Formation -->
+        <div class="form-group">
+            <!-- label Avez-vous bénéficié d'une formation cette année ou l'année dernière ?
+                div(class="form-check")
+                    input#radioFormed(class="form-check-input" type="radio" name="formed" value="true" checked)
+                    label(class="form-check-label" for="radioFormed") Oui
+
+                div(class="form-check")
+                    input#radioNotFormed(class="form-check-input" type="radio" name="formed" value="false")
+                    label(class="form-check-label" for="radioNotFormed") Non -->
+        </div>
+        <!-- //- Connexion au CPF -->
+        <div class="form-group">
+            <!-- label Vous êtes-vous déjà connecté(e) à votre compte formation (<i>moncompteformation.gouv.fr</i>) ?
+                div(class="form-check")
+                    input#radioConnected(class="form-check-input" type="radio" name="connected" value="true" checked)
+                    label(class="form-check-label" for="radioConnected") Oui
+
+                div(class="form-check")
+                    input#radioNotConnected(class="form-check-input" type="radio" name="connected" value="false")
+                    label(class="form-check-label" for="radioNotConnected") Non -->
+        </div>
+        <!-- //- Budget formation -->
+        <div class="form-group">
+            <!-- label Connaissez-vous votre budget formation ?
+                div(class="form-check")
+                    input#radioHasBudget(class="form-check-input" type="radio" name="budget" value="true" checked)
+                    label(class="form-check-label" for="radioHasBudget") Oui
+
+                div(class="form-check")
+                    input#radioNoBudget(class="form-check-input" type="radio" name="budget" value="false")
+                    label(class="form-check-label" for="radioNoBudget") Non -->
+        </div>
+        <!-- //- FranceConnect -->
+        <div class="form-group">
+            <!-- label Avez-vous un compte FranceConnect ?
+                div(class="form-check")
+                    input#radioHasAccount(class="form-check-input" type="radio" name="hasAccount" value="true" checked)
+                    label(class="form-check-label" for="radioHasAccount") Oui
+
+                div(class="form-check")
+                    input#radioNoAccount(class="form-check-input" type="radio" name="hasAccount" value="false")
+                    label(class="form-check-label" for="radioNoAccount") Non -->
+        </div>
+        <!-- //- Accepte le transfert -->
+        <div class="form-check">
+            <!-- <input>#radioAgreeTerms(class="form-check-input" type="checkbox" name="agreedTerms" value="true" required)
+                label(class="form-check-label" for="radioAgreeTerms") Acceptez-vous le transfert de ces données à un formateur aggréé ? -->
+        </div>
+        <!-- //- Submit button -->
+        <div class="mt-4 mx-auto" style="width: 200px">
+            <input type="submit" value="Valider" class="btn btn-primary w-100" />
+        </div>
+    </form>
+</div>

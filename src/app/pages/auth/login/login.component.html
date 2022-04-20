@@ -1,0 +1,28 @@
+<div class="container position-absolute top-50 start-50 translate-middle">
+    <h1 class="text-center">Connectez-vous</h1>
+
+    <form class="form text-center" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- <div *ngIf="error" class="alert alert-danger" role="alert">
+            <p>{{ error.error.message }}</p>
+        </div> -->
+
+        <input
+            type="email"
+            class="form-control mb-2"
+            placeholder="Adresse email"
+            formControlName="email"
+            required
+            autofocus
+        />
+
+        <input
+            type="password"
+            class="form-control mb-2"
+            placeholder="Mot de passe"
+            formControlName="password"
+            required
+        />
+
+        <button class="btn btn-primary btn-block mt-3" type="submit">Se connecter</button>
+    </form>
+</div>

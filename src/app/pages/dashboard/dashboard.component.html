@@ -1,0 +1,40 @@
+<div class="container flex-column justify-content-center w-75 mt-5">
+    <h1 class="text-center">Tableau de bord</h1>
+
+    <div class="d-flex flex-column mt-5">
+        <h2 class="pl-2">
+            <i class="fas fa-user-shield pr-2"></i> {{ userConnected.firstname }}
+            {{ userConnected.lastname }}
+        </h2>
+
+        <!-- //- Download leads file section -->
+        <div class="d-flex justify-content-between align-items-center border bg-light p-4 mt-3">
+            <h5>Fichier des prospects</h5>
+            <form method="get" action="/leads/csv">
+                <button class="btn btn-md btn-primary float-right" type="submit">
+                    <i class="fas fa-download pr-1"></i>Télécharger le fichier
+                </button>
+            </form>
+        </div>
+
+        <!-- //- Create user modal -->
+        <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                    </div>
+                    <div class="modal-body">p Test</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Annuler
+                        </button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- //- Table of users -->
+    </div>
+</div>
