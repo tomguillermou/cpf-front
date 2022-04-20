@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "nodein-frontend": {
+        "cpf-front": {
             "projectType": "application",
             "schematics": {},
             "root": "",
@@ -13,7 +13,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/nodein-frontend",
+                        "outputPath": "dist/",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -21,9 +21,10 @@
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": [
                             "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+                            "./node_modules/bootstrap/dist/css/bootstrap.css",
                             "src/styles.css"
                         ],
-                        "scripts": [],
+                        "scripts": ["./node_modules/bootstrap/dist/js/bootstrap.js"],
                         "vendorChunk": true,
                         "extractLicenses": false,
                         "buildOptimizer": false,
@@ -61,18 +62,18 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "nodein-frontend:build"
+                        "browserTarget": "cpf-front:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "nodein-frontend:build:production"
+                            "browserTarget": "cpf-front:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "nodein-frontend:build"
+                        "browserTarget": "cpf-front:build"
                     }
                 },
                 "test": {
@@ -94,16 +95,16 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "nodein-frontend:serve"
+                        "devServerTarget": "cpf-front:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "nodein-frontend:serve:production"
+                            "devServerTarget": "cpf-front:serve:production"
                         }
                     }
                 }
             }
         }
     },
-    "defaultProject": "nodein-frontend"
+    "defaultProject": "cpf-front"
 }
