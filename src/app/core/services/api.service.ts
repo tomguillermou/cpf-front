@@ -7,14 +7,14 @@ import { environment } from '../../../environments/environment';
 export class ApiService {
     constructor(private _httpClient: HttpClient) {}
 
-    public get(resource: string, withAuthentication = false) {
+    public get<TResponseBody>(resource: string, withAuthentication = false) {
         let headers = {};
 
         if (withAuthentication) {
             headers = this.getHeadersWithAuthentication();
         }
 
-        return this._httpClient.get(environment.apiUrl + resource, { headers });
+        return this._httpClient.get<TResponseBody>(environment.apiUrl + resource, { headers });
     }
 
     public post<TResponseBody>(resource: string, body: unknown, withAuthentication = false) {

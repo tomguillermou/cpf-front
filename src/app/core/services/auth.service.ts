@@ -23,11 +23,17 @@ export class AuthenticationService {
 
     public login(requestBody: LoginRequestBody) {
         return this._apiService.post<LoginResponseBody>('/auth/login', requestBody).pipe(
-            map((responseBody) => {
-                localStorage.setItem('token', responseBody.access_token);
-                // localStorage.setItem('user', JSON.stringify(responseBody.user));
-                // this.$userConnected.next(responseBody.user);
-                return responseBody;
+            map((authBody) => {
+                localStorage.setItem('token', authBody.access_token);
+            })
+        );
+    }
+
+    public getProfile() {
+        return this._apiService.get<User>('/profile').pipe(
+            map((user) => {
+                localStorage.setItem('user', JSON.stringify(user));
+                this.$userConnected.next(user);
             })
         );
     }
