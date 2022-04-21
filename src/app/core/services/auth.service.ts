@@ -12,8 +12,7 @@ interface LoginRequestBody {
 }
 
 interface LoginResponseBody {
-    token: string;
-    user: User;
+    access_token: string;
 }
 
 @Injectable()
@@ -25,9 +24,9 @@ export class AuthenticationService {
     public login(requestBody: LoginRequestBody) {
         return this._apiService.post<LoginResponseBody>('/auth/login', requestBody).pipe(
             map((responseBody) => {
-                localStorage.setItem('token', responseBody.token);
-                localStorage.setItem('user', JSON.stringify(responseBody.user));
-                this.$userConnected.next(responseBody.user);
+                localStorage.setItem('token', responseBody.access_token);
+                // localStorage.setItem('user', JSON.stringify(responseBody.user));
+                // this.$userConnected.next(responseBody.user);
                 return responseBody;
             })
         );
