@@ -13,6 +13,15 @@ export class ApiService {
         return this._httpClient.get<TResponseBody>(environment.apiUrl + resource, { headers });
     }
 
+    public getFile(resource: string) {
+        const headers = this.getHeadersWithAuthentication();
+
+        return this._httpClient.get<Blob>(environment.apiUrl + resource, {
+            headers,
+            responseType: 'blob' as 'json',
+        });
+    }
+
     public post<TResponseBody>(resource: string, body: unknown, withAuthentication = false) {
         let headers = {};
 

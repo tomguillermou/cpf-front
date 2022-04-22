@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'app/core/services';
 import { User } from 'app/shared/models';
 import { LeadService } from 'app/shared/services';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-form',
@@ -14,7 +15,10 @@ export class FormComponent implements OnInit {
     public userConnected: User | null;
 
     public leadForm: FormGroup;
-    public displayValidationError: boolean = false;
+    public showInvalid = false;
+    public showSectorGroup = false;
+
+    private _previousValues: Record<string, unknown>;
 
     constructor(
         private _router: Router,
@@ -27,6 +31,13 @@ export class FormComponent implements OnInit {
             lastname: ['', Validators.required],
             phonenumber: ['', Validators.required],
             email: ['', Validators.required],
+            employed: ['', Validators.required],
+            sector: ['', Validators.required],
+            trained: ['', Validators.required],
+            connected: ['', Validators.required],
+            budget: [null, Validators.required],
+            account: ['', Validators.required],
+            agrees: ['', Validators.required],
         });
 
         this._authService.getUserConnected().subscribe((user) => {
@@ -34,23 +45,55 @@ export class FormComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this._previousValues = this.leadForm.value;
 
-    public onSubmit(): void {
+        this.leadForm.valueChanges.subscribe((formValues) => {
+            const { employed } = formValues;
+
+            this.showSectorGroup = employed === '' || employed === 'true';
+
+            if (!this.showSectorGroup) {
+                this.leadForm.get('sector').setValue('none', { emitEvent: false });
+            } else if (this.showSectorGroup && this._previousValues.employed === 'false') {
+                this.leadForm.get('sector').setValue('', { emitEvent: false });
+            }
+
+            this._previousValues = formValues;
+        });
+    }
+
+    public async onSubmit(): Promise<void> {
         if (this.userConnected) {
             if (this.leadForm.valid) {
-                this.displayValidationError = false;
+                this.showInvalid = false;
 
-                this._leadService.createOne({}).subscribe({
-                    next: (body): void => {
-                        this._router.navigateByUrl('/form');
-                    },
-                    error: (error): void => {
-                        console.log('🚀 ~ error', error);
-                    },
-                });
+                this._leadService
+                    .createOne({ ...this.leadForm.value, prospector: this.userConnected._id })
+                    .subscribe({
+                        next: async (_body) => {
+                            await Swal.fire({
+                                title: 'Merci !',
+                                text: 'Vos réponses ont bien été enregistrées. Nous reviendrons vers vous dans les plus brefs délais.',
+                                icon: 'success',
+                                confirmButtonText: 'Suivant',
+                            });
+
+                            this.leadForm.reset();
+
+                            this._router.navigateByUrl('/form');
+                        },
+                        error: () => {
+                            Swal.fire({
+                                title: 'Oops !',
+                                text: "Une erreur s'est produite lors de la sauvegarde de vos réponses. Réessayez plus tard.",
+                                icon: 'error',
+                                confirmButtonText: 'Suivant',
+                            });
+                        },
+                    });
             } else {
-                this.displayValidationError = true;
+                this.showInvalid = true;
             }
         }
     }

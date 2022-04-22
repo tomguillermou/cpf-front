@@ -10,15 +10,13 @@
         <!-- //- Download leads file section -->
         <div class="d-flex justify-content-between align-items-center border bg-light p-4 mt-3">
             <h5>Fichier des prospects</h5>
-            <form method="get" action="/leads/csv">
-                <button class="btn btn-md btn-primary float-right" type="submit">
-                    <i class="fas fa-download pr-1"></i>Télécharger le fichier
-                </button>
-            </form>
+            <button class="btn btn-md btn-primary float-right" (click)="downloadCsv()">
+                <i class="fas fa-download pr-1"></i>Télécharger le fichier
+            </button>
         </div>
 
         <!-- //- Create user modal -->
-        <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog">
+        <!-- <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -33,7 +31,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- //- Table of users -->
     </div>

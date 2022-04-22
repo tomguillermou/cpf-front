@@ -1,6 +1,6 @@
 <div class="container mt-5 w-50">
     <div class="d-flex justify-content-center">
-        <img src="/images/logo_cpf.png" heigth="300" width="300" />
+        <img src="/assets/images/logo_cpf.png" heigth="300" width="300" />
     </div>
 
     <div class="text-center">
@@ -8,13 +8,17 @@
     </div>
 
     <form class="form mt-4 mb-5" [formGroup]="leadForm" (ngSubmit)="onSubmit()">
+        <div class="alert alert-danger" *ngIf="showInvalid">
+            Des champs du formulaire sont manquants ou invalides.
+        </div>
+
         <!-- //- Informations personelles -->
         <input
             type="text"
             class="form-control my-3"
             placeholder="Prénom"
             formControlName="firstname"
-            [class.border-danger]="displayValidationError && leadForm.get('firstname').invalid"
+            [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
         />
 
         <input
@@ -22,7 +26,7 @@
             class="form-control my-3"
             placeholder="Nom"
             formControlName="lastname"
-            [class.border-danger]="displayValidationError && leadForm.get('firstname').invalid"
+            [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
         />
 
         <input
@@ -30,7 +34,7 @@
             class="form-control my-3"
             placeholder="Numéro de téléphone"
             formControlName="phonenumber"
-            [class.border-danger]="displayValidationError && leadForm.get('firstname').invalid"
+            [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
         />
 
         <input
@@ -38,81 +42,164 @@
             class="form-control my-3"
             placeholder="Email"
             formControlName="email"
-            [class.border-danger]="displayValidationError && leadForm.get('firstname').invalid"
+            [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
         />
 
         <!-- //- Activité professionnelle -->
-        <div class="form-group">
-            <!-- label Avez-vous eu une activité professionnelle ces 3 dernières années ?
-                div(class="form-check")
-                    input#radioEmployed(class="form-check-input" type="radio" name="employed" value="true" checked)
-                    label(class="form-check-label" for="radioEmployed") Oui
-
-                div(class="form-check")
-                    input#radioUnemployed(class="form-check-input" type="radio" name="employed" value="false")
-                    label(class="form-check-label" for="radioUnemployed") Non -->
+        <div class="form-group mt-3">
+            <label class="form-label">
+                Avez-vous eu une activité professionnelle ces 3 dernières années ?
+            </label>
+            <div class="form-input">
+                <span class="mx-2">
+                    <input type="radio" value="true" formControlName="employed" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('employed').invalid"
+                    >
+                        Oui
+                    </span>
+                </span>
+                <span class="mx-2">
+                    <input type="radio" value="false" formControlName="employed" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('employed').invalid"
+                    >
+                        Non
+                    </span>
+                </span>
+            </div>
         </div>
-        <div class="form-group"></div>
-        <!-- label Si oui, dans quel secteur ?
-                div(class="form-check")
-                    input#radioPrivateSector(class="form-check-input" type="radio" name="sector" value="false" checked)
-                    label(class="form-check-label" for="radioPrivateSector") Privé
+        <div class="form-group mt-3" *ngIf="showSectorGroup">
+            <label class="form-label"> Dans quel secteur ? </label>
+            <div class="form-input">
+                <span class="mx-2">
+                    <input type="radio" value="private" formControlName="sector" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('sector').invalid"
+                    >
+                        Privé
+                    </span>
+                </span>
+                <span class="mx-2">
+                    <input type="radio" value="public" formControlName="sector" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('sector').invalid"
+                    >
+                        Public
+                    </span>
+                </span>
+            </div>
+        </div>
 
-                div(class="form-check")
-                    input#radioPublicSector(class="form-check-input" type="radio" name="sector" value="true")
-                    label(class="form-check-label" for="radioPublicSector") Public
-                </div> -->
         <!-- //- Formation -->
-        <div class="form-group">
-            <!-- label Avez-vous bénéficié d'une formation cette année ou l'année dernière ?
-                div(class="form-check")
-                    input#radioFormed(class="form-check-input" type="radio" name="formed" value="true" checked)
-                    label(class="form-check-label" for="radioFormed") Oui
-
-                div(class="form-check")
-                    input#radioNotFormed(class="form-check-input" type="radio" name="formed" value="false")
-                    label(class="form-check-label" for="radioNotFormed") Non -->
+        <div class="form-group mt-3">
+            <label class="form-label">
+                Avez-vous bénéficié d'une formation cette année ou l'année dernière ?
+            </label>
+            <div class="form-input">
+                <span class="mx-2">
+                    <input type="radio" value="true" formControlName="trained" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('trained').invalid"
+                    >
+                        Oui
+                    </span>
+                </span>
+                <span class="mx-2">
+                    <input type="radio" value="false" formControlName="trained" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('trained').invalid"
+                    >
+                        Non
+                    </span>
+                </span>
+            </div>
         </div>
+
         <!-- //- Connexion au CPF -->
-        <div class="form-group">
-            <!-- label Vous êtes-vous déjà connecté(e) à votre compte formation (<i>moncompteformation.gouv.fr</i>) ?
-                div(class="form-check")
-                    input#radioConnected(class="form-check-input" type="radio" name="connected" value="true" checked)
-                    label(class="form-check-label" for="radioConnected") Oui
-
-                div(class="form-check")
-                    input#radioNotConnected(class="form-check-input" type="radio" name="connected" value="false")
-                    label(class="form-check-label" for="radioNotConnected") Non -->
+        <div class="form-group mt-3">
+            <label class="form-label">
+                Vous êtes-vous déjà connecté(e) à votre compte formation ?
+            </label>
+            <div class="form-input">
+                <span class="mx-2">
+                    <input type="radio" value="true" formControlName="connected" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('connected').invalid"
+                    >
+                        Oui
+                    </span>
+                </span>
+                <span class="mx-2">
+                    <input type="radio" value="false" formControlName="connected" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('connected').invalid"
+                    >
+                        Non
+                    </span>
+                </span>
+            </div>
         </div>
+
         <!-- //- Budget formation -->
-        <div class="form-group">
-            <!-- label Connaissez-vous votre budget formation ?
-                div(class="form-check")
-                    input#radioHasBudget(class="form-check-input" type="radio" name="budget" value="true" checked)
-                    label(class="form-check-label" for="radioHasBudget") Oui
-
-                div(class="form-check")
-                    input#radioNoBudget(class="form-check-input" type="radio" name="budget" value="false")
-                    label(class="form-check-label" for="radioNoBudget") Non -->
+        <div class="form-group mt-3">
+            <label class="form-label">Connaissez-vous votre budget formation (en euros) ?</label>
+            <input
+                type="number"
+                class="form-control"
+                formControlName="budget"
+                min="0"
+                [class.border-danger]="showInvalid && leadForm.get('budget').invalid"
+            />
+            <span class="fw-light fst-italic">
+                * Ecrivez 0 si vous ne connaissez pas votre budget formation.
+            </span>
         </div>
+
         <!-- //- FranceConnect -->
-        <div class="form-group">
-            <!-- label Avez-vous un compte FranceConnect ?
-                div(class="form-check")
-                    input#radioHasAccount(class="form-check-input" type="radio" name="hasAccount" value="true" checked)
-                    label(class="form-check-label" for="radioHasAccount") Oui
+        <div class="form-group mt-3">
+            <label class="form-label">Avez-vous un compte FranceConnect ?</label>
+            <div class="form-input">
+                <span class="mx-2">
+                    <input type="radio" value="true" formControlName="account" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('account').invalid"
+                    >
+                        Oui
+                    </span>
+                </span>
+                <span class="mx-2">
+                    <input type="radio" value="false" formControlName="account" />
+                    <span
+                        class="mx-2"
+                        [class.text-danger]="showInvalid && leadForm.get('account').invalid"
+                    >
+                        Non
+                    </span>
+                </span>
+            </div>
+        </div>
 
-                div(class="form-check")
-                    input#radioNoAccount(class="form-check-input" type="radio" name="hasAccount" value="false")
-                    label(class="form-check-label" for="radioNoAccount") Non -->
-        </div>
         <!-- //- Accepte le transfert -->
-        <div class="form-check">
-            <!-- <input>#radioAgreeTerms(class="form-check-input" type="checkbox" name="agreedTerms" value="true" required)
-                label(class="form-check-label" for="radioAgreeTerms") Acceptez-vous le transfert de ces données à un formateur aggréé ? -->
+        <div class="d-flex form-check mt-3 align-items-center">
+            <input class="form-check-input" type="checkbox" value="true" formControlName="agrees" />
+            <span class="mx-3" [class.text-danger]="showInvalid && leadForm.get('agrees').invalid">
+                J'accepte que ces données soient sauvegardées de manière sécurisée et transmises à
+                un organisme de formation aggrée.
+            </span>
         </div>
+
         <!-- //- Submit button -->
-        <div class="mt-4 mx-auto" style="width: 200px">
+        <div class="mt-3 mx-auto" style="width: 200px">
             <input type="submit" value="Valider" class="btn btn-primary w-100" />
         </div>
     </form>
