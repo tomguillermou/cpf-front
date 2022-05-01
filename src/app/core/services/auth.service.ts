@@ -46,18 +46,31 @@ export class AuthenticationService {
 
     public async isLoggedIn(): Promise<boolean> {
         // Improve by making call to API to check token authenticity
-        return typeof localStorage.getItem('token') === 'string';
+        const user = this.getUserFromStorage();
+
+        return typeof user !== 'undefined';
+    }
+
+    public async isAdminLoggedIn(): Promise<boolean> {
+        // Improve by making call to API to check token authenticity
+        const user = this.getUserFromStorage();
+
+        return user && user.isAdmin;
     }
 
     public getUserConnected(): Observable<User> {
+        const user = this.getUserFromStorage();
+
+        this.$userConnected.next(user);
+
+        return this.$userConnected.asObservable();
+    }
+
+    private getUserFromStorage(): User | undefined {
         const userStringified = localStorage.getItem('user');
 
         if (userStringified) {
-            this.$userConnected.next(JSON.parse(userStringified));
-        } else {
-            this.$userConnected.next(null);
+            return JSON.parse(userStringified);
         }
-
-        return this.$userConnected.asObservable();
     }
 }
