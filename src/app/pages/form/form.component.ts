@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'app/core/services';
 import { User } from 'app/shared/models';
 import { LeadService } from 'app/shared/services';
+import * as moment from 'moment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,6 +19,8 @@ export class FormComponent implements OnInit {
     public showInvalid = false;
     public showSectorGroup = false;
 
+    public todaysDate: string;
+
     private _previousValues: Record<string, unknown>;
 
     constructor(
@@ -26,6 +29,8 @@ export class FormComponent implements OnInit {
         private _authService: AuthenticationService,
         private _leadService: LeadService
     ) {
+        this.todaysDate = moment().format('YYYY-MM-DD');
+
         this.leadForm = this._formBuilder.group({
             firstname: ['', Validators.required],
             lastname: ['', Validators.required],
@@ -38,6 +43,8 @@ export class FormComponent implements OnInit {
             budget: [null, Validators.required],
             account: ['', Validators.required],
             agrees: ['', Validators.required],
+            callDate: ['', Validators.required],
+            callHour: ['', Validators.required],
         });
 
         this._authService.getUserConnected().subscribe((user) => {
@@ -64,37 +71,41 @@ export class FormComponent implements OnInit {
     }
 
     public async onSubmit(): Promise<void> {
-        if (this.userConnected) {
-            if (this.leadForm.valid) {
-                this.showInvalid = false;
+        if (this.userConnected && this.leadForm.valid) {
+            this.showInvalid = false;
 
-                this._leadService
-                    .createOne({ ...this.leadForm.value, prospector: this.userConnected._id })
-                    .subscribe({
-                        next: async (_body) => {
-                            await Swal.fire({
-                                title: 'Merci !',
-                                text: 'Vos réponses ont bien été enregistrées. Nous reviendrons vers vous dans les plus brefs délais.',
-                                icon: 'success',
-                                confirmButtonText: 'Suivant',
-                            });
-
-                            this.leadForm.reset();
-
-                            this._router.navigateByUrl('/form');
-                        },
-                        error: () => {
-                            Swal.fire({
-                                title: 'Oops !',
-                                text: "Une erreur s'est produite lors de la sauvegarde de vos réponses. Réessayez plus tard.",
-                                icon: 'error',
-                                confirmButtonText: 'Suivant',
-                            });
-                        },
-                    });
-            } else {
-                this.showInvalid = true;
-            }
+            this._leadService
+                .createOne({ ...this.leadForm.value, prospector: this.userConnected._id })
+                .subscribe({
+                    next: async (_body) => {
+                        await this.displayFormSuccessModal();
+                        this.leadForm.reset();
+                        this._router.navigateByUrl('/form');
+                    },
+                    error: async () => {
+                        await this.displayFormErrorModal();
+                    },
+                });
+        } else {
+            this.showInvalid = true;
         }
+    }
+
+    private async displayFormSuccessModal(): Promise<void> {
+        await Swal.fire({
+            title: 'Merci !',
+            text: 'Vos réponses ont bien été enregistrées. Nous reviendrons vers vous dans les plus brefs délais.',
+            icon: 'success',
+            confirmButtonText: 'Suivant',
+        });
+    }
+
+    private async displayFormErrorModal(): Promise<void> {
+        await Swal.fire({
+            title: 'Oops !',
+            text: "Une erreur s'est produite lors de la sauvegarde de vos réponses. Réessayez plus tard.",
+            icon: 'error',
+            confirmButtonText: 'Suivant',
+        });
     }
 }

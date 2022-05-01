@@ -1,10 +1,10 @@
-<div class="container mt-5 w-50">
+<div class="container w-md-50">
     <div class="d-flex justify-content-center">
         <img src="/assets/images/logo_cpf.png" heigth="300" width="300" />
     </div>
 
     <div class="text-center">
-        <h2>Formulaire de demande d'accompagnement</h2>
+        <h1>Formulaire de demande d'accompagnement</h1>
     </div>
 
     <form class="form mt-4 mb-5" [formGroup]="leadForm" (ngSubmit)="onSubmit()">
@@ -13,193 +13,241 @@
         </div>
 
         <!-- //- Informations personelles -->
-        <input
-            type="text"
-            class="form-control my-3"
-            placeholder="Prénom"
-            formControlName="firstname"
-            [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
-        />
-
-        <input
-            type="text"
-            class="form-control my-3"
-            placeholder="Nom"
-            formControlName="lastname"
-            [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
-        />
-
-        <input
-            type="text"
-            class="form-control my-3"
-            placeholder="Numéro de téléphone"
-            formControlName="phonenumber"
-            [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
-        />
-
-        <input
-            type="text"
-            class="form-control my-3"
-            placeholder="Email"
-            formControlName="email"
-            [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
-        />
+        <div>
+            <h3 class="mt-3">Informations personelles</h3>
+            <hr class="dropdown-divider" />
+            <input
+                type="text"
+                class="form-control my-3"
+                placeholder="Prénom"
+                formControlName="firstname"
+                [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
+            />
+            <input
+                type="text"
+                class="form-control my-3"
+                placeholder="Nom"
+                formControlName="lastname"
+                [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
+            />
+            <input
+                type="text"
+                class="form-control my-3"
+                placeholder="Numéro de téléphone"
+                formControlName="phonenumber"
+                [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
+            />
+            <input
+                type="text"
+                class="form-control my-3"
+                placeholder="Email"
+                formControlName="email"
+                [class.border-danger]="showInvalid && leadForm.get('firstname').invalid"
+            />
+        </div>
 
         <!-- //- Activité professionnelle -->
-        <div class="form-group mt-3">
-            <label class="form-label">
-                Avez-vous eu une activité professionnelle ces 3 dernières années ?
-            </label>
-            <div class="form-input">
-                <span class="mx-2">
-                    <input type="radio" value="true" formControlName="employed" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('employed').invalid"
-                    >
-                        Oui
+        <div>
+            <h3 class="mt-3">Activité professionnelle</h3>
+            <hr class="dropdown-divider" />
+            <div class="form-group mt-3">
+                <label class="form-label">
+                    Avez-vous eu une activité professionnelle ces 3 dernières années ?
+                </label>
+                <div class="form-input">
+                    <span class="mx-2">
+                        <input type="radio" value="true" formControlName="employed" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('employed').invalid"
+                        >
+                            Oui
+                        </span>
                     </span>
-                </span>
-                <span class="mx-2">
-                    <input type="radio" value="false" formControlName="employed" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('employed').invalid"
-                    >
-                        Non
+                    <span class="mx-2">
+                        <input type="radio" value="false" formControlName="employed" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('employed').invalid"
+                        >
+                            Non
+                        </span>
                     </span>
-                </span>
+                </div>
+            </div>
+            <div class="form-group mt-3" *ngIf="showSectorGroup">
+                <label class="form-label"> Dans quel secteur ? </label>
+                <div class="form-input">
+                    <span class="mx-2">
+                        <input type="radio" value="private" formControlName="sector" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('sector').invalid"
+                        >
+                            Privé
+                        </span>
+                    </span>
+                    <span class="mx-2">
+                        <input type="radio" value="public" formControlName="sector" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('sector').invalid"
+                        >
+                            Public
+                        </span>
+                    </span>
+                </div>
             </div>
         </div>
-        <div class="form-group mt-3" *ngIf="showSectorGroup">
-            <label class="form-label"> Dans quel secteur ? </label>
-            <div class="form-input">
-                <span class="mx-2">
-                    <input type="radio" value="private" formControlName="sector" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('sector').invalid"
-                    >
-                        Privé
+
+        <!-- //- Formations -->
+        <div>
+            <h3 class="mt-3">Formation(s)</h3>
+            <hr class="dropdown-divider" />
+            <div class="form-group mt-3">
+                <label class="form-label">
+                    Avez-vous bénéficié d'une formation cette année ou l'année dernière ?
+                </label>
+                <div class="form-input">
+                    <span class="mx-2">
+                        <input type="radio" value="true" formControlName="trained" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('trained').invalid"
+                        >
+                            Oui
+                        </span>
                     </span>
-                </span>
-                <span class="mx-2">
-                    <input type="radio" value="public" formControlName="sector" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('sector').invalid"
-                    >
-                        Public
+                    <span class="mx-2">
+                        <input type="radio" value="false" formControlName="trained" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('trained').invalid"
+                        >
+                            Non
+                        </span>
                     </span>
+                </div>
+            </div>
+            <!-- //- Connexion au CPF -->
+            <div class="form-group mt-3">
+                <label class="form-label">
+                    Vous êtes-vous déjà connecté(e) à votre compte formation ?
+                </label>
+                <div class="form-input">
+                    <span class="mx-2">
+                        <input type="radio" value="true" formControlName="connected" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('connected').invalid"
+                        >
+                            Oui
+                        </span>
+                    </span>
+                    <span class="mx-2">
+                        <input type="radio" value="false" formControlName="connected" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('connected').invalid"
+                        >
+                            Non
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <!-- //- Budget formation -->
+            <div class="form-group mt-3">
+                <label class="form-label"
+                    >Connaissez-vous votre budget formation (en euros) ?</label
+                >
+                <input
+                    type="number"
+                    class="form-control"
+                    formControlName="budget"
+                    min="0"
+                    [class.border-danger]="showInvalid && leadForm.get('budget').invalid"
+                />
+                <span class="fw-light fst-italic">
+                    * Ecrivez 0 si vous ne connaissez pas votre budget formation.
                 </span>
             </div>
         </div>
 
-        <!-- //- Formation -->
-        <div class="form-group mt-3">
-            <label class="form-label">
-                Avez-vous bénéficié d'une formation cette année ou l'année dernière ?
-            </label>
-            <div class="form-input">
-                <span class="mx-2">
-                    <input type="radio" value="true" formControlName="trained" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('trained').invalid"
-                    >
-                        Oui
+        <!-- //- Autres informations -->
+        <div>
+            <h3 class="mt-3">Autres informations</h3>
+            <hr class="dropdown-divider" />
+            <div class="form-group mt-3">
+                <label class="form-label">Avez-vous un compte FranceConnect ?</label>
+                <div class="form-input">
+                    <span class="mx-2">
+                        <input type="radio" value="true" formControlName="account" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('account').invalid"
+                        >
+                            Oui
+                        </span>
                     </span>
-                </span>
-                <span class="mx-2">
-                    <input type="radio" value="false" formControlName="trained" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('trained').invalid"
-                    >
-                        Non
+                    <span class="mx-2">
+                        <input type="radio" value="false" formControlName="account" />
+                        <span
+                            class="mx-2"
+                            [class.text-danger]="showInvalid && leadForm.get('account').invalid"
+                        >
+                            Non
+                        </span>
                     </span>
-                </span>
+                </div>
             </div>
         </div>
 
-        <!-- //- Connexion au CPF -->
-        <div class="form-group mt-3">
-            <label class="form-label">
-                Vous êtes-vous déjà connecté(e) à votre compte formation ?
-            </label>
-            <div class="form-input">
-                <span class="mx-2">
-                    <input type="radio" value="true" formControlName="connected" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('connected').invalid"
-                    >
-                        Oui
-                    </span>
-                </span>
-                <span class="mx-2">
-                    <input type="radio" value="false" formControlName="connected" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('connected').invalid"
-                    >
-                        Non
-                    </span>
-                </span>
+        <!-- //- Disponibilité -->
+        <div>
+            <h3 class="mt-3">Disponibilité</h3>
+            <hr class="dropdown-divider" />
+            <div>
+                <label class="form-label">Date de l'appel</label>
+                <input
+                    class="form-control calendar-picker"
+                    type="date"
+                    min="{{ todaysDate }}"
+                    formControlName="callDate"
+                    [class.border-danger]="showInvalid && leadForm.get('callDate').invalid"
+                />
             </div>
-        </div>
-
-        <!-- //- Budget formation -->
-        <div class="form-group mt-3">
-            <label class="form-label">Connaissez-vous votre budget formation (en euros) ?</label>
-            <input
-                type="number"
-                class="form-control"
-                formControlName="budget"
-                min="0"
-                [class.border-danger]="showInvalid && leadForm.get('budget').invalid"
-            />
-            <span class="fw-light fst-italic">
-                * Ecrivez 0 si vous ne connaissez pas votre budget formation.
-            </span>
-        </div>
-
-        <!-- //- FranceConnect -->
-        <div class="form-group mt-3">
-            <label class="form-label">Avez-vous un compte FranceConnect ?</label>
-            <div class="form-input">
-                <span class="mx-2">
-                    <input type="radio" value="true" formControlName="account" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('account').invalid"
-                    >
-                        Oui
-                    </span>
-                </span>
-                <span class="mx-2">
-                    <input type="radio" value="false" formControlName="account" />
-                    <span
-                        class="mx-2"
-                        [class.text-danger]="showInvalid && leadForm.get('account').invalid"
-                    >
-                        Non
-                    </span>
-                </span>
+            <div class="mt-3">
+                <label class="form-label">Heure de l'appel</label>
+                <select
+                    class="form-control"
+                    name="callHour"
+                    formControlName="callHour"
+                    [class.border-danger]="showInvalid && leadForm.get('callHour').invalid"
+                >
+                    <option disabled selected>Choisissez une plage horaire</option>
+                    <option value="morning">Matin (9h - 13h)</option>
+                    <option value="afternoon">Apres-midi (13h - 19h)</option>
+                </select>
             </div>
         </div>
 
         <!-- //- Accepte le transfert -->
-        <div class="d-flex form-check mt-3 align-items-center">
-            <input class="form-check-input" type="checkbox" value="true" formControlName="agrees" />
-            <span class="mx-3" [class.text-danger]="showInvalid && leadForm.get('agrees').invalid">
-                J'accepte que ces données soient sauvegardées de manière sécurisée et transmises à
-                un organisme de formation aggrée.
-            </span>
+        <div class="mt-3">
+            <hr class="dropdown-divider" />
+            <div class="d-flex mt-3 align-items-center">
+                <input class="form-input" type="checkbox" value="true" formControlName="agrees" />
+                <span
+                    class="mx-3"
+                    [class.text-danger]="showInvalid && leadForm.get('agrees').invalid"
+                >
+                    J'accepte que ces données soient sauvegardées de manière sécurisée et qu'elles
+                    puissent être transmises à un organisme de formation.
+                </span>
+            </div>
         </div>
 
         <!-- //- Submit button -->
-        <div class="mt-3 mx-auto" style="width: 200px">
+        <div class="mx-auto mt-3 pb-4" style="width: 200px">
             <input type="submit" value="Valider" class="btn btn-primary w-100" />
         </div>
     </form>
