@@ -1,12 +1,11 @@
-<div class="d-flex justify-content-between align-items-center bg-light p-2" *ngIf="showHeader">
+<div class="d-flex justify-content-between align-items-center bg-light p-2" *ngIf="isUserConnected">
     <div class="d-flex align-items-center">
         <a class="text-dark text-decoration-none fs-5 mx-3" href="/">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-home"> </i>
         </a>
 
-        <span class="align-middle fs-5 mx-2">|</span>
-
-        <div class="d-flex list-unstyled">
+        <div class="d-flex list-unstyled" *ngIf="isUserConnectedAnAdmin">
+            <span class="align-middle fs-5 mx-2">|</span>
             <a class="text-dark text-decoration-none fs-5 mx-2" href="/dashboard">
                 Tableau de bord
             </a>
