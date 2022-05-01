@@ -1,17 +1,18 @@
-<div class="container flex-column justify-content-center w-75 mt-5">
+<div class="container flex-column justify-content-center w-md-75 mt-5 px-3">
     <h1 class="text-center">Tableau de bord</h1>
 
     <div class="d-flex flex-column mt-5">
         <h2 class="pl-2">
-            <i class="fas fa-user-shield pr-2"></i> {{ userConnected.firstname }}
-            {{ userConnected.lastname }}
+            <i class="fas fa-user-shield px-2"></i>
+            <span>{{ userConnected.firstname }} {{ userConnected.lastname }}</span>
         </h2>
 
         <!-- //- Download leads file section -->
         <div class="d-flex justify-content-between align-items-center border bg-light p-4 mt-3">
             <h5>Fichier des prospects</h5>
             <button class="btn btn-md btn-primary float-right" (click)="downloadCsv()">
-                <i class="fas fa-download pr-1"></i>Télécharger le fichier
+                <i class="fas fa-download pr-1"></i>
+                <span>Télécharger le fichier</span>
             </button>
         </div>
 
