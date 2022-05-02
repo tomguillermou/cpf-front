@@ -75,7 +75,11 @@ export class FormComponent implements OnInit {
             this.showInvalid = false;
 
             this._leadService
-                .createOne({ ...this.leadForm.value, prospector: this.userConnected._id })
+                .createOne({
+                    ...this.leadForm.value,
+                    prospector: this.userConnected._id,
+                    prospectionDate: moment.utc().toISOString(),
+                })
                 .subscribe({
                     next: async (_body) => {
                         await this.displayFormSuccessModal();
