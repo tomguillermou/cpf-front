@@ -40,11 +40,11 @@ export class FormComponent implements OnInit {
             sector: ['', Validators.required],
             trained: ['', Validators.required],
             connected: ['', Validators.required],
-            budget: [null, Validators.required],
+            budget: [0, Validators.required],
             account: ['', Validators.required],
-            agrees: ['', Validators.required],
             callDate: ['', Validators.required],
             callHour: ['', Validators.required],
+            agrees: [false, Validators.requiredTrue],
         });
 
         this._authService.getUserConnected().subscribe((user) => {
